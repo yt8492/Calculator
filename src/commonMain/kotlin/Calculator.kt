@@ -1,7 +1,13 @@
-import com.github.h0tk3y.betterParse.combinators.*
+import com.github.h0tk3y.betterParse.combinators.leftAssociative
+import com.github.h0tk3y.betterParse.combinators.map
+import com.github.h0tk3y.betterParse.combinators.or
+import com.github.h0tk3y.betterParse.combinators.times
+import com.github.h0tk3y.betterParse.combinators.unaryMinus
+import com.github.h0tk3y.betterParse.combinators.use
 import com.github.h0tk3y.betterParse.grammar.Grammar
 import com.github.h0tk3y.betterParse.grammar.parser
 import com.github.h0tk3y.betterParse.parser.Parser
+import kotlin.math.PI
 
 sealed class AST {
     data class Number(val n: Double) : AST()
@@ -13,6 +19,7 @@ sealed class AST {
 
 object Parser : Grammar<AST>() {
     val number by token("""-?\d+(\.\d+)?""")
+    val pi by token("""pi""")
     val whiteSpace by token("""\s+""", ignore = true)
     val plus by token("""\+""")
     val minus by token("""-""")
@@ -22,7 +29,7 @@ object Parser : Grammar<AST>() {
     val rightBracket by token("""\)""")
 
     val bracedTerm by -leftBracket * parser(this::addSubTerm) * -rightBracket
-    val seed: Parser<AST> by number map { AST.Number(it.text.toDouble()) } or bracedTerm
+    val seed: Parser<AST> by number map { AST.Number(it.text.toDouble()) } or bracedTerm or pi map { AST.Number(PI) }
     val mulDivTerm by leftAssociative(seed, times or div use { type }) { a, op, b ->
         if (op == times) AST.Mul(a, b) else AST.Div(a, b)
     }
