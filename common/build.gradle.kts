@@ -15,6 +15,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+                implementation("com.github.h0tk3y.betterParse:better-parse-metadata:0.4.0-alpha-3")
             }
         }
         val commonTest by getting {

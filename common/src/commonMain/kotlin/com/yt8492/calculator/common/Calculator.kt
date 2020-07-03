@@ -1,4 +1,4 @@
-package com.yt8492.calculator
+package com.yt8492.calculator.common
 
 sealed class CalculateToken {
     data class Num(val n: Double) : CalculateToken()
