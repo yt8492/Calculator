@@ -1,3 +1,5 @@
+package com.yt8492.calculator
+
 sealed class CalculateToken {
     data class Num(val n: Double) : CalculateToken()
     sealed class Operator : CalculateToken(), Comparable<Operator> {
