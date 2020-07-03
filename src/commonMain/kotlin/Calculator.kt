@@ -90,28 +90,27 @@ object Calculator {
 
     private fun calculateReversePolish(tokens: List<CalculateToken>): CalculateResult {
         try {
-            var stack = listOf<Double>()
-            tokens.forEach {
-                when (it) {
+            val result = tokens.fold(listOf<Double>()) { acc, token ->
+                when (token) {
                     is CalculateToken.Num -> {
-                        stack = listOf(it.n) + stack
+                        listOf(token.n) + acc
                     }
                     is CalculateToken.Operator -> {
-                        val a = stack[0]
-                        val b = stack[1]
-                        stack = stack.drop(2)
-                        when (it) {
+                        val a = acc[0]
+                        val b = acc[1]
+                        val stack = acc.drop(2)
+                        when (token) {
                             is CalculateToken.Operator.Plus -> {
-                                stack = listOf(a + b) + stack
+                                listOf(a + b) + stack
                             }
                             is CalculateToken.Operator.Minus -> {
-                                stack = listOf(a - b) + stack
+                                listOf(a - b) + stack
                             }
                             is CalculateToken.Operator.Times -> {
-                                stack = listOf(a * b) + stack
+                                listOf(a * b) + stack
                             }
                             is CalculateToken.Operator.Divide -> {
-                                stack = listOf(a / b) + stack
+                                listOf(a / b) + stack
                             }
                         }
                     }
@@ -119,8 +118,8 @@ object Calculator {
                         return CalculateResult.Failure.ParseError
                     }
                 }
-            }
-            return CalculateResult.Success(stack[0])
+            }.first()
+            return CalculateResult.Success(result)
         } catch (e: ArithmeticException) {
             return CalculateResult.Failure.ArithmeticError
         } catch (e: IndexOutOfBoundsException) {
