@@ -82,6 +82,8 @@ object Calculator {
                                 a.operatorStack.drop(1),
                                 a.outputQueue + op
                             )
+                        }.let {
+                            it.copy(operatorStack = it.operatorStack.drop(1))
                         }
                 }
             }
@@ -98,8 +100,8 @@ object Calculator {
                         listOf(token.n) + acc
                     }
                     is CalculateToken.Operator -> {
-                        val a = acc[0]
-                        val b = acc[1]
+                        val b = acc[0]
+                        val a = acc[1]
                         val stack = acc.drop(2)
                         when (token) {
                             is CalculateToken.Operator.Plus -> {
