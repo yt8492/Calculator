@@ -5,6 +5,7 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven("https://dl.bintray.com/hotkeytlt/maven")
 }
 
 androidCommon()
@@ -25,6 +26,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-common"))
+                implementation("com.github.h0tk3y.betterParse:better-parse:0.4.0")
+
             }
         }
         val androidMain by getting {
