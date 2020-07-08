@@ -1,7 +1,17 @@
 package com.yt8492.calculator.common
 
 sealed class CalculateToken {
-    data class Num(val n: Double) : CalculateToken()
+    sealed class Number : CalculateToken() {
+        data class Integer(val value: Long) : Number()
+        data class Real(val value: Double) : Number()
+
+        fun toCalculateResult(): CalculateResult.Success<out kotlin.Number> {
+            return when (this) {
+                is Integer -> CalculateResult.Success.Integer(this.value)
+                is Real -> CalculateResult.Success.Real(this.value)
+            }
+        }
+    }
     sealed class Operator : CalculateToken(), Comparable<Operator> {
         object Plus : Operator()
         object Minus : Operator()
@@ -35,7 +45,12 @@ sealed class CalculateToken {
 }
 
 sealed class CalculateResult {
-    data class Success(val n: Double) : CalculateResult()
+    sealed class Success<T : Number> : CalculateResult() {
+        abstract val value: T
+
+        data class Integer(override val value: Long) : Success<Long>()
+        data class Real(override val value: Double) : Success<Double>()
+    }
     sealed class Failure : CalculateResult() {
         object ParseError : Failure()
         object ArithmeticError : Failure()
@@ -53,7 +68,7 @@ object Calculator {
     ): CalculateResult {
         val shuntingYard = tokens.fold(ShuntingYard(listOf(), listOf())) { acc, token ->
             when (token) {
-                is CalculateToken.Num -> {
+                is CalculateToken.Number -> {
                     acc.copy(outputQueue = acc.outputQueue + token)
                 }
                 is CalculateToken.Operator -> {
@@ -94,27 +109,48 @@ object Calculator {
 
     private fun calculateReversePolish(tokens: List<CalculateToken>): CalculateResult {
         try {
-            val result = tokens.fold(listOf<Double>()) { acc, token ->
+            val result = tokens.fold(listOf<CalculateResult.Success<out Number>>()) { acc, token ->
                 when (token) {
-                    is CalculateToken.Num -> {
-                        listOf(token.n) + acc
+                    is CalculateToken.Number -> {
+                        listOf(token.toCalculateResult()) + acc
                     }
                     is CalculateToken.Operator -> {
-                        val b = acc[0]
-                        val a = acc[1]
+                        val b = acc[0].value
+                        val a = acc[1].value
                         val stack = acc.drop(2)
-                        when (token) {
-                            is CalculateToken.Operator.Plus -> {
-                                listOf(a + b) + stack
+                        if (a is Long && b is Long) {
+                            when (token) {
+                                is CalculateToken.Operator.Plus -> {
+                                    listOf(CalculateResult.Success.Integer(a + b)) + stack
+                                }
+                                is CalculateToken.Operator.Minus -> {
+                                    listOf(CalculateResult.Success.Integer(a - b)) + stack
+                                }
+                                is CalculateToken.Operator.Times -> {
+                                    listOf(CalculateResult.Success.Integer(a * b)) + stack
+                                }
+                                is CalculateToken.Operator.Divide -> {
+                                    if (a % b == 0L) {
+                                        listOf(CalculateResult.Success.Integer(a / b)) + stack
+                                    } else {
+                                        listOf(CalculateResult.Success.Real(a.toDouble() / b)) + stack
+                                    }
+                                }
                             }
-                            is CalculateToken.Operator.Minus -> {
-                                listOf(a - b) + stack
-                            }
-                            is CalculateToken.Operator.Times -> {
-                                listOf(a * b) + stack
-                            }
-                            is CalculateToken.Operator.Divide -> {
-                                listOf(a / b) + stack
+                        } else {
+                            when (token) {
+                                is CalculateToken.Operator.Plus -> {
+                                    listOf(CalculateResult.Success.Real(a.toDouble() + b.toDouble())) + stack
+                                }
+                                is CalculateToken.Operator.Minus -> {
+                                    listOf(CalculateResult.Success.Real(a.toDouble() - b.toDouble())) + stack
+                                }
+                                is CalculateToken.Operator.Times -> {
+                                    listOf(CalculateResult.Success.Real(a.toDouble() * b.toDouble())) + stack
+                                }
+                                is CalculateToken.Operator.Divide -> {
+                                    listOf(CalculateResult.Success.Real(a.toDouble() / b.toDouble())) + stack
+                                }
                             }
                         }
                     }
@@ -122,8 +158,10 @@ object Calculator {
                         return CalculateResult.Failure.ParseError
                     }
                 }
-            }.first()
-            return CalculateResult.Success(result)
+            }.firstOrNull() ?: run {
+                return CalculateResult.Failure.ParseError
+            }
+            return result
         } catch (e: ArithmeticException) {
             return CalculateResult.Failure.ArithmeticError
         } catch (e: IndexOutOfBoundsException) {
