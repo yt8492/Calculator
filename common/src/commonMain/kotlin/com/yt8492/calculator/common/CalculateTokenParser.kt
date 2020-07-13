@@ -48,7 +48,13 @@ object CalculateTokenParser {
                         else -> throw IllegalArgumentException("token not match")
                     }
                 }
-                .toList()
+                .fold(listOf<CalculateToken>()) { acc, token ->
+                    if (token is CalculateToken.Number && acc.lastOrNull() is CalculateToken.Number) {
+                        acc + CalculateToken.Operator.Plus + token
+                    } else {
+                        acc + token
+                    }
+                }
             return ParseResult.Success(tokens)
         } catch (e: IllegalArgumentException) {
             return ParseResult.Failure
