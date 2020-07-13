@@ -1,18 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.yt8492.calculator.CalculatorViewModel" />
+    </data>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/expressionEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:inputType="none"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:text="@={viewModel.expressionLiveData}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="1+2+3" />
+
+        <TableLayout
+            android:id="@+id/keyTable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/key_divider"
+            android:showDividers="middle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <TableRow style="@style/KeyRow">
+                <TextView
+                    style="@style/Key.Operator"
+                    android:id="@+id/keyEqual"
+                    android:text="=" />
+
+                <TextView
+                    style="@style/Key"
+                    android:id="@+id/calculateResultTextView"
+                    android:layout_weight="3"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:textColor="#000000"
+                    android:textAlignment="textEnd"
+                    android:text="@{viewModel.calculateResultLiveData}"
+                    tools:text="6" />
+
+            </TableRow>
+
+            <TableRow style="@style/KeyRow">
+                <TextView
+                    style="@style/Key.Other"
+                    android:id="@+id/keyClear"
+                    android:text="C" />
+
+                <TextView
+                    style="@style/Key.Other"
+                    android:id="@+id/keyBracketLeft"
+                    android:text="(" />
+
+                <TextView
+                    style="@style/Key.Other"
+                    android:id="@+id/keyBracketRight"
+                    android:text=")" />
+
+                <ImageView
+                    style="@style/Key.Other"
+                    android:id="@+id/keyBack"
+                    android:src="@android:drawable/ic_input_delete" />
+            </TableRow>
+
+            <TableRow style="@style/KeyRow">
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key7"
+                    android:text="7" />
+
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key8"
+                    android:text="8" />
+
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key9"
+                    android:text="9" />
+
+                <TextView
+                    style="@style/Key.Operator"
+                    android:id="@+id/keyDivide"
+                    android:text="÷" />
+            </TableRow>
+
+            <TableRow style="@style/KeyRow">
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key4"
+                    android:text="4" />
+
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key5"
+                    android:text="5" />
+
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key6"
+                    android:text="6" />
+
+                <TextView
+                    style="@style/Key.Operator"
+                    android:id="@+id/keyTimes"
+                    android:text="×" />
+            </TableRow>
+
+            <TableRow style="@style/KeyRow">
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key1"
+                    android:text="1" />
+
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key2"
+                    android:text="2" />
+
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key3"
+                    android:text="3" />
+
+                <TextView
+                    style="@style/Key.Operator"
+                    android:id="@+id/keyMinus"
+                    android:text="-" />
+            </TableRow>
+
+            <TableRow style="@style/KeyRow">
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key00"
+                    android:text="00" />
+
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/key0"
+                    android:text="0" />
+
+                <TextView
+                    style="@style/Key.Num"
+                    android:id="@+id/keyDot"
+                    android:text="." />
+
+                <TextView
+                    style="@style/Key.Operator"
+                    android:id="@+id/keyPlus"
+                    android:text="+" />
+            </TableRow>
+        </TableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
