@@ -53,6 +53,8 @@
                     android:paddingEnd="10dp"
                     android:textColor="#000000"
                     android:textAlignment="textEnd"
+                    android:lines="1"
+                    android:ellipsize="end"
                     android:text="@{viewModel.calculateResultLiveData}"
                     tools:text="6" />
 

@@ -26,26 +26,28 @@ class MainActivity : AppCompatActivity() {
             .filterIsInstance<TableRow>()
             .flatMap { it.children }
             .filterNot { it.id == R.id.calculateResultTextView }
-            .forEach {
-                when (it.id) {
+            .forEach { view ->
+                when (view.id) {
                     R.id.keyBack -> {
-                        it.setOnClickListener {
+                        view.setOnClickListener {
                             inputConnection.deleteSurroundingText(1, 0)
                         }
                     }
                     R.id.keyClear -> {
-                        it.setOnClickListener {
+                        view.setOnClickListener {
                             binding.expressionEditText.setText("")
                             binding.calculateResultTextView.text = ""
                         }
                     }
                     R.id.keyEqual -> {
-                        it.setOnClickListener {
-                            viewModel.setResultToInput()
+                        view.setOnClickListener { _ ->
+                            val result = binding.calculateResultTextView.text.toString()
+                            binding.expressionEditText.setText(result)
+                            binding.expressionEditText.setSelection(result.length)
                         }
                     }
                     else -> {
-                        it.setOnClickListener {
+                        view.setOnClickListener {
                             val textView = it as? TextView ?: return@setOnClickListener
                             inputConnection.commitText(textView.text, textView.text.length)
                         }
