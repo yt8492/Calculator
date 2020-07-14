@@ -21,6 +21,6 @@ allprojects {
     }
 }
 
-task<Delete>("clean") {
+task<Delete>("rootClean") {
     delete(rootProject.buildDir)
 }
