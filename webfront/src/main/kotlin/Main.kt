@@ -1,3 +1,8 @@
+import react.dom.render
+import kotlin.browser.document
+
 fun main() {
-    println("Hello, Kotlin/JS!")
+    render(document.getElementById("root")) {
+        calculatorComponent()
+    }
 }

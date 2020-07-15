@@ -22,6 +22,9 @@ kotlin {
     *  https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#setting-up-targets */
 
     android("android")
+    js {
+        browser()
+    }
 
     sourceSets {
         val commonMain by getting {
@@ -33,6 +36,12 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(Dependencies.Kotlin.jvm)
+            }
+        }
+        val jsMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation(kotlin("stdlib-js"))
             }
         }
         val commonTest by getting {
