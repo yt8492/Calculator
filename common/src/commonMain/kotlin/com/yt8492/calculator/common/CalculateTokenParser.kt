@@ -3,12 +3,14 @@ package com.yt8492.calculator.common
 import com.github.h0tk3y.betterParse.lexer.DefaultTokenizer
 import com.github.h0tk3y.betterParse.lexer.literalToken
 import com.github.h0tk3y.betterParse.lexer.regexToken
+import kotlin.native.concurrent.ThreadLocal
 
 sealed class ParseResult {
     data class Success(val tokens: List<CalculateToken>) : ParseResult()
     object Failure : ParseResult()
 }
 
+@ThreadLocal
 object CalculateTokenParser {
     private val whiteSpace = regexToken("""\s+""", ignore = true)
     private val integer = regexToken("""-?\d+""")
