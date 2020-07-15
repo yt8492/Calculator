@@ -25,6 +25,9 @@ kotlin {
     js {
         browser()
     }
+    linuxX64()
+    macosX64()
+    mingwX64()
 
     sourceSets {
         val commonMain by getting {

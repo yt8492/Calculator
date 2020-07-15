@@ -1,3 +1,3 @@
-include(":android", ":common")
+include(":android", ":cli", ":common")
 rootProject.name = "Calculator"
 include("webfront")
