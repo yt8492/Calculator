@@ -3,7 +3,7 @@ package com.yt8492.calculator.cli
 import com.yt8492.calculator.common.CalculateResult
 import com.yt8492.calculator.common.CalculateTokenParser
 import com.yt8492.calculator.common.Calculator
-import com.yt8492.calculator.common.ParseResult
+import com.yt8492.calculator.common.CalculateTokenParseResult
 import kotlinx.cli.ArgParser
 import kotlinx.cli.ArgType
 
@@ -12,7 +12,7 @@ fun main(args: Array<String>) {
     val expression by argParser.argument(ArgType.String, description = "expression")
     argParser.parse(args)
     val tokenParseResult = CalculateTokenParser.parse(expression)
-    if (tokenParseResult !is ParseResult.Success) {
+    if (tokenParseResult !is CalculateTokenParseResult.Success) {
         println("Failed to parse input expression.")
         return
     }

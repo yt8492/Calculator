@@ -5,9 +5,9 @@ import com.github.h0tk3y.betterParse.lexer.literalToken
 import com.github.h0tk3y.betterParse.lexer.regexToken
 import kotlin.native.concurrent.ThreadLocal
 
-sealed class ParseResult {
-    data class Success(val tokens: List<CalculateToken>) : ParseResult()
-    object Failure : ParseResult()
+sealed class CalculateTokenParseResult {
+    data class Success(val tokens: List<CalculateToken>) : CalculateTokenParseResult()
+    object Failure : CalculateTokenParseResult()
 }
 
 @ThreadLocal
@@ -33,7 +33,7 @@ object CalculateTokenParser {
         rightBracket
     ))
 
-    fun parse(input: String): ParseResult {
+    fun parse(input: String): CalculateTokenParseResult {
         try {
             val tokens = tokenizer.tokenize(input)
                 .filter { !it.type.ignored }
@@ -57,9 +57,9 @@ object CalculateTokenParser {
                         acc + token
                     }
                 }
-            return ParseResult.Success(tokens)
+            return CalculateTokenParseResult.Success(tokens)
         } catch (e: IllegalArgumentException) {
-            return ParseResult.Failure
+            return CalculateTokenParseResult.Failure
         }
     }
 }

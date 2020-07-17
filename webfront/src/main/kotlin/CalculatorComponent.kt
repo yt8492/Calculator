@@ -1,7 +1,7 @@
 import com.yt8492.calculator.common.CalculateResult
 import com.yt8492.calculator.common.CalculateTokenParser
 import com.yt8492.calculator.common.Calculator
-import com.yt8492.calculator.common.ParseResult
+import com.yt8492.calculator.common.CalculateTokenParseResult
 import kotlinx.css.*
 import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
@@ -56,7 +56,7 @@ private val calculatorComponent = functionalComponent<RProps> {
             numButton(".") { setExpression("${expression}.") }
             operatorButton("=") {
                 val parseResult = CalculateTokenParser.parse(expression)
-                if (parseResult is ParseResult.Success) {
+                if (parseResult is CalculateTokenParseResult.Success) {
                     val calculateResult = Calculator.calculate(parseResult.tokens)
                     if (calculateResult is CalculateResult.Success<out Number>) {
                         setExpression(calculateResult.value.toString())
