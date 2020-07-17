@@ -13,7 +13,24 @@
 		D87EFFC324BF84BB003CE146 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D87EFFC224BF84BB003CE146 /* Assets.xcassets */; };
 		D87EFFC624BF84BB003CE146 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D87EFFC524BF84BB003CE146 /* Preview Assets.xcassets */; };
 		D87EFFC924BF84BB003CE146 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D87EFFC724BF84BB003CE146 /* LaunchScreen.storyboard */; };
+		D87EFFD224BF89E1003CE146 /* common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D87EFFD124BF89E1003CE146 /* common.framework */; };
+		D87EFFD324BF89E1003CE146 /* common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D87EFFD124BF89E1003CE146 /* common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D87EFFD624C1CD76003CE146 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87EFFD524C1CD76003CE146 /* Buttons.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D87EFFD424BF89E1003CE146 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D87EFFD324BF89E1003CE146 /* common.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D87EFFB924BF84B9003CE146 /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -24,6 +41,8 @@
 		D87EFFC524BF84BB003CE146 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D87EFFC824BF84BB003CE146 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D87EFFCA24BF84BB003CE146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D87EFFD124BF89E1003CE146 /* common.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = common.framework; path = ../common/build/bin/ios/debugFramework/common.framework; sourceTree = "<group>"; };
+		D87EFFD524C1CD76003CE146 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D87EFFD224BF89E1003CE146 /* common.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +62,7 @@
 			children = (
 				D87EFFBB24BF84B9003CE146 /* ios */,
 				D87EFFBA24BF84B9003CE146 /* Products */,
+				D87EFFD024BF89E1003CE146 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -63,6 +84,7 @@
 				D87EFFC724BF84BB003CE146 /* LaunchScreen.storyboard */,
 				D87EFFCA24BF84BB003CE146 /* Info.plist */,
 				D87EFFC424BF84BB003CE146 /* Preview Content */,
+				D87EFFD524C1CD76003CE146 /* Buttons.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -75,6 +97,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		D87EFFD024BF89E1003CE146 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D87EFFD124BF89E1003CE146 /* common.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -85,6 +115,7 @@
 				D87EFFB524BF84B9003CE146 /* Sources */,
 				D87EFFB624BF84B9003CE146 /* Frameworks */,
 				D87EFFB724BF84B9003CE146 /* Resources */,
+				D87EFFD424BF89E1003CE146 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -149,6 +180,7 @@
 				D87EFFBD24BF84B9003CE146 /* AppDelegate.swift in Sources */,
 				D87EFFBF24BF84B9003CE146 /* SceneDelegate.swift in Sources */,
 				D87EFFC124BF84B9003CE146 /* ContentView.swift in Sources */,
+				D87EFFD624C1CD76003CE146 /* Buttons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +319,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"ios/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = ../common/build/bin/ios/debugFramework;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -306,6 +339,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"ios/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = ../common/build/bin/ios/releaseFramework;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
