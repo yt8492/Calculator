@@ -3,7 +3,6 @@ package com.yt8492.calculator
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.TableRow
 import android.widget.TextView
