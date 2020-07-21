@@ -2,20 +2,12 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
 }
 
 repositories {
     jcenter()
     mavenCentral()
     maven("https://dl.bintray.com/hotkeytlt/maven")
-}
-
-androidCommon()
-android {
-    sourceSets.forEach {
-        it.manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    }
 }
 
 val ideaActive = System.getProperty("idea.active") == "true"
@@ -32,7 +24,7 @@ kotlin {
         iosX64("ios", configure)
     }
 
-    android("android")
+    jvm()
     js {
         browser()
     }
@@ -54,9 +46,9 @@ kotlin {
                 implementation("com.github.h0tk3y.betterParse:better-parse:0.4.0")
             }
         }
-        val androidMain by getting {
+        val jvmMain by getting {
             dependencies {
-                implementation(Dependencies.Kotlin.jvm)
+                implementation(kotlin("stdlib-jdk8"))
             }
         }
         val jsMain by getting {
